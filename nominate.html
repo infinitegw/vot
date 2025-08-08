@@ -1,19 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Nominate</title>
+  <meta charset="UTF-8">
+  <title>Nominate – St. Joseph's Voting</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body onload="loadNominationOptions()">
-  <div class="container">
-    <h2>Nominate Yourself</h2>
-    <input id="name" placeholder="Your Full Name">
-    <select id="position"><option>Loading Posts...</option></select>
-    <select id="class"><option>Loading Classes...</option></select>
-    <select id="dorm"><option>Loading Dorms...</option></select>
-    <textarea id="manifesto" placeholder="Your Manifesto"></textarea>
-    <button onclick="nominate()">Submit Nomination</button>
-  </div>
+<body>
+  <header>
+    <h1>📋 Nomination Form</h1>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="voting.html">Vote</a>
+      <a href="results.html">Results</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+    <form id="nominationForm">
+      <h2>Nominate Yourself for a Post</h2>
+
+      <select id="post" required>
+        <option value="">Select Post</option>
+        <option value="School Captain">School Captain</option>
+        <option value="Dorm Representative">Dorm Representative</option>
+      </select>
+
+      <textarea id="manifesto" rows="5" placeholder="Write your manifesto here..." required></textarea>
+
+      <button type="submit">Submit Nomination</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>© 2025 St. Joseph's Boys High School – Kitale</p>
+  </footer>
+
   <script src="script.js"></script>
+  <script>
+    const student = JSON.parse(localStorage.getItem("currentStudent"));
+    if (!student) {
+      alert("Please log in first.");
+      window.location.href = "login.html";
+    }
+
+    document.getElementById("nominationForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const post = document.getElementById("post").value;
+      const manifesto = document.getElementById("manifesto").value.trim();
+
+      if (!post || !manifesto) return alert("Please fill in all fields.");
+
+      const nominations = JSON.parse(localStorage.getItem("nominations")) || [];
+
+      // Save nomination for admin approval
+      nominations.push({
+        name: student.name,
+        adm: student.adm,
+        class: student.class,
+        dorm: student.dorm,
+        post,
+        manifesto,
+        approved: false
+      });
+
+      localStorage.setItem("nominations", JSON.stringify(nominations));
+      alert("Nomination submitted for approval.");
+      document.getElementById("nominationForm").reset();
+    });
+  </script>
 </body>
 </html>

@@ -1,25 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>St. Joseph's Boys High School Voting System</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #004080, #00aaff);
+      color: #fff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      max-width: 500px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+    .btn-container {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button {
+      background-color: #003366;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1rem;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0055aa;
+    }
+  </style>
 </head>
-<body onload="loadDynamicOptions()">
-  <header>Login - St. Joseph’s Voting</header>
-  <nav>
-    <a href="master.html">Home</a>
-    <a href="register.html">Register</a>
-    <a href="admin.html">Admin Panel</a>
-  </nav>
+<body>
 
-  <div class="container">
-    <h2>Student Login</h2>
-    <input id="adm" placeholder="Admission Number">
-    <input id="name" placeholder="Full Name">
-    <select id="class"></select>
-    <select id="dorm"></select>
-    <button onclick="login()">Login</button>
+  <h1>Welcome to St. Joseph's Boys High School Voting System</h1>
+  <p>Participate in our school elections by registering, logging in, and casting your vote securely.</p>
+
+  <div class="btn-container">
+    <button onclick="window.location.href='register.html'">Register</button>
+    <button onclick="window.location.href='login.html'">Login</button>
+    <button id="adminBtn">Admin Panel</button>
   </div>
+
+  <script>
+    document.getElementById('adminBtn').addEventListener('click', () => {
+      const password = prompt('Enter admin password:');
+      const storedPass = localStorage.getItem('adminPassword') || 'admin123';
+      if (password === storedPass) {
+        localStorage.setItem('adminLoggedIn', 'true');
+        window.location.href = 'admin.html';
+      } else {
+        alert('Incorrect password');
+      }
+    });
+  </script>
+
 </body>
 </html>

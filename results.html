@@ -1,15 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>View Results</title>
+  <meta charset="UTF-8">
+  <title>Results – St. Joseph's Voting</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body onload="loadResults()">
-  <div class="container">
-    <h2>📊 Published Results</h2>
-    <div id="results"></div>
-    <button onclick="location.href='dashboard.html'">🔙 Back</button>
-  </div>
+<body>
+  <header>
+    <h1>📊 Election Results</h1>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="voting.html">Vote</a>
+      <a href="nominate.html">Nominate</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Final Election Results</h2>
+    <div id="resultsContainer"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 St. Joseph's Boys High School – Kitale</p>
+  </footer>
+
   <script src="script.js"></script>
+  <script>
+    const student = JSON.parse(localStorage.getItem("currentStudent"));
+    if (!student) {
+      alert("Please log in first.");
+      window.location.href = "login.html";
+    }
+
+    const published = JSON.parse(localStorage.getItem("resultsPublished"));
+    if (!published) {
+      document.getElementById("resultsContainer").innerHTML = "<p><strong>Results have not been published yet by the admin.</strong></p>";
+    } else {
+      displayResults();
+    }
+
+    function displayResults() {
+      const votes = JSON.parse(localStorage.getItem("votes")) || {};
+      const contestants = JSON.parse(localStorage.getItem("contestants")) || [];
+      const posts = JSON.parse(localStorage.getItem("posts")) || ["School Captain", "Dorm Representative"];
+
+      const tally = {};
+
+      // Count votes per post per candidate
+      Object.values(votes).forEach(v => {
+        for (const post in v) {
+          const name = v[post];
+          if (!tally[post]) tally[post] = {};
+          if (!tally[post][name]) tally[post][name] = 0;
+          tally[post][name]++;
+        }
+      });
+
+      let html = "";
+      posts.forEach(post => {
+        html += `<h3>${post}</h3><ul>`;
+        if (tally[post]) {
+          const sorted = Object.entries(tally[post]).sort((a, b) => b[1] - a[1]);
+          sorted.forEach(([name, count]) => {
+            html += `<li>${name} – <strong>${count} vote(s)</strong></li>`;
+          });
+        } else {
+          html += `<li>No votes cast for this post.</li>`;
+        }
+        html += `</ul><hr>`;
+      });
+
+      document.getElementById("resultsContainer").innerHTML = html;
+    }
+  </script>
 </body>
 </html>

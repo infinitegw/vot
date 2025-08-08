@@ -1,27 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Vote - St. Joseph’s Voting</title>
+  <meta charset="UTF-8">
+  <title>Vote – St. Joseph's Kitale</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="script.js" defer></script>
 </head>
-<body onload="loadVotingOptions(); disableVotingIfPastDeadline();">
-  <header>Vote - St. Joseph’s Boys Kitale</header>
-  <nav>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="contestants.html">View Candidates</a>
-    <a href="profile.html">Profile</a>
-    <a href="#" onclick="logout()">Logout</a>
-  </nav>
+<body>
+  <header>
+    <h1>🗳️ Cast Your Vote</h1>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="profile.html">Profile</a>
+      <a href="results.html">Results</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
 
-  <div class="container">
-    <h2>Cast Your Votes</h2>
-    <p id="deadlineCountdown"></p>
-    <div id="voteArea">
-      <!-- Dynamically filled by script.js -->
+  <main>
+    <div id="voteSection">
+      <h2>Available Positions</h2>
+      <div id="voteForms">
+        <!-- Positions will be loaded here -->
+      </div>
     </div>
-    <button id="submitVoteBtn" onclick="submitVote()">Submit Votes</button>
-  </div>
+  </main>
+
+  <footer>
+    <p>© 2025 St. Joseph's Boys High School – Kitale</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Check login
+    const student = JSON.parse(localStorage.getItem("currentStudent"));
+    if (!student) {
+      alert("Please login first.");
+      window.location.href = "login.html";
+    }
+
+    // Load voting form
+    loadVotingForm();
+
+    function loadVotingForm() {
+      const posts = JSON.parse(localStorage.getItem("posts")) || ["School Captain", "Dorm Representative"];
+      const contestants = JSON.parse(localStorage.getItem("contestants")) || [];
+      const votes = JSON.parse(localStorage.getItem("votes")) || {};
+      const adm = student.adm;
+
+      const votedPosts = votes[adm] ? Object.keys(votes[adm]) : [];
+
+      let html = '';
+      posts.forEach(post => {
+        // Only show if not voted
+        if (!votedPosts.includes(post)) {
+          const options = contestants.filter(c => c.post === post);
+          if (options.length > 0) {
+            html += `<div class="voteBox">
+              <h3>${post}</h3>
+              <select id="select-${post}">
+                <option value="">-- Select Candidate --</option>`;
+            options.forEach(opt => {
+              html += `<option value="${opt.name}">${opt.name}</option>`;
+            });
+            html += `</select>
+              <button onclick="submitVote('${post}')">Vote</button>
+            </div>`;
+          }
+        }
+      });
+
+      if (html === '') {
+        html = `<p>You have already voted for all available positions.</p>`;
+      }
+
+      document.getElementById("voteForms").innerHTML = html;
+    }
+
+    function submitVote(post) {
+      const selected = document.getElementById(`select-${post}`).value;
+      if (!selected) return alert("Please select a candidate.");
+      
+      const votes = JSON.parse(localStorage.getItem("votes")) || {};
+      const adm = student.adm;
+
+      if (!votes[adm]) votes[adm] = {};
+      votes[adm][post] = selected;
+
+      localStorage.setItem("votes", JSON.stringify(votes));
+      alert(`Your vote for ${post} has been submitted!`);
+      loadVotingForm(); // reload to reflect voted post
+    }
+  </script>
 </body>
 </html>

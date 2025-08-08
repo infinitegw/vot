@@ -1,40 +1,162 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Admin Panel</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel - St. Joseph's Voting System</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 0 20px 40px;
+      color: #222;
+    }
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    header button {
+      background-color: #e63946;
+      border: none;
+      color: white;
+      padding: 10px 18px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    header button:hover {
+      background-color: #c62828;
+    }
+    main {
+      max-width: 900px;
+      margin: 30px auto 0;
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    main h2 {
+      margin-top: 0;
+      color: #004080;
+      border-bottom: 2px solid #004080;
+      padding-bottom: 10px;
+    }
+    section {
+      margin-bottom: 35px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      border: 1.8px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus, input[type="password"]:focus {
+      border-color: #004080;
+      outline: none;
+    }
+    button.action-btn {
+      background-color: #004080;
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 5px;
+    }
+    button.action-btn:hover {
+      background-color: #002b5c;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 10px;
+    }
+    ul li {
+      padding: 8px 12px;
+      background: #f0f4ff;
+      border-radius: 5px;
+      margin-bottom: 7px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+    }
+    ul li button {
+      background-color: #2a9d8f;
+      padding: 6px 12px;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background-color 0.3s ease;
+    }
+    ul li button:hover {
+      background-color: #21867a;
+    }
+  </style>
 </head>
-<body onload="adminLoginCheck(); loadAdminDashboard();">
-  <header>Admin Panel</header>
-  <nav>
-    <a href="master.html">Back to Home</a>
-    <a href="#" onclick="logoutAdmin()">Logout Admin</a>
-  </nav>
+<body onload="checkAdminSession()">
 
-  <div class="container">
-    <h2>📋 Registered Students</h2>
-    <div id="adminStudents"></div>
+<header>
+  <h1>Admin Dashboard</h1>
+  <button onclick="logoutAdmin()">Logout</button>
+</header>
 
-    <h2>🗳️ Approved Candidates</h2>
-    <div id="adminCandidates"></div>
+<main>
+  <section>
+    <h2>Change Admin Password</h2>
+    <input type="password" id="newAdminPassword" placeholder="Enter new password" />
+    <button class="action-btn" onclick="changeAdminPassword()">Update Password</button>
+  </section>
 
-    <h2>📥 Pending Nominations</h2>
-    <div id="adminNominations"></div>
+  <section>
+    <h2>Manage Classes</h2>
+    <input type="text" id="newClass" placeholder="Add new class" />
+    <button class="action-btn" onclick="addClass()">Add Class</button>
+    <ul id="classList"></ul>
+  </section>
 
-    <h2>🏆 Winning Candidates</h2>
-    <div id="winnersDisplay"></div>
-    <button onclick="publishWinners()">Publish Results to Students</button>
+  <section>
+    <h2>Manage Dorms</h2>
+    <input type="text" id="newDorm" placeholder="Add new dorm" />
+    <button class="action-btn" onclick="addDorm()">Add Dorm</button>
+    <ul id="dormList"></ul>
+  </section>
 
-    <h2>⚙️ Add Class / Dorm / Post</h2>
-    <input id="newClass" placeholder="New Class">
-    <button onclick="addClass()">Add Class</button><br>
+  <section>
+    <h2>Approve Nominations</h2>
+    <ul id="nominationList"></ul>
+  </section>
 
-    <input id="newDorm" placeholder="New Dorm">
-    <button onclick="addDorm()">Add Dorm</button><br>
+  <section>
+    <h2>Publish Results</h2>
+    <button class="action-btn" onclick="publishResults()">Publish Now</button>
+  </section>
+</main>
 
-    <input id="newPost" placeholder="New Post">
-    <button onclick="addPost()">Add Post</button>
-  </div>
+<script src="script.js"></script>
 </body>
 </html>
