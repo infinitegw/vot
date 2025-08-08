@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vote - St. Joseph’s Voting</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body onload="loadVotingOptions(); disableVotingIfPastDeadline();">
+  <header>Vote - St. Joseph’s Boys Kitale</header>
+  <nav>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="contestants.html">View Candidates</a>
+    <a href="profile.html">Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+
+  <div class="container">
+    <h2>Cast Your Votes</h2>
+    <p id="deadlineCountdown"></p>
+    <div id="voteArea">
+      <!-- Dynamically filled by script.js -->
+    </div>
+    <button id="submitVoteBtn" onclick="submitVote()">Submit Votes</button>
+  </div>
+</body>
+</html>

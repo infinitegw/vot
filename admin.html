@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body onload="adminLoginCheck(); loadAdminDashboard();">
+  <header>Admin Panel</header>
+  <nav>
+    <a href="master.html">Back to Home</a>
+    <a href="#" onclick="logoutAdmin()">Logout Admin</a>
+  </nav>
+
+  <div class="container">
+    <h2>📋 Registered Students</h2>
+    <div id="adminStudents"></div>
+
+    <h2>🗳️ Approved Candidates</h2>
+    <div id="adminCandidates"></div>
+
+    <h2>📥 Pending Nominations</h2>
+    <div id="adminNominations"></div>
+
+    <h2>🏆 Winning Candidates</h2>
+    <div id="winnersDisplay"></div>
+    <button onclick="publishWinners()">Publish Results to Students</button>
+
+    <h2>⚙️ Add Class / Dorm / Post</h2>
+    <input id="newClass" placeholder="New Class">
+    <button onclick="addClass()">Add Class</button><br>
+
+    <input id="newDorm" placeholder="New Dorm">
+    <button onclick="addDorm()">Add Dorm</button><br>
+
+    <input id="newPost" placeholder="New Post">
+    <button onclick="addPost()">Add Post</button>
+  </div>
+</body>
+</html>

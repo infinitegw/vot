@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View Candidates</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body onload="renderCandidates();">
+  <header>Approved Candidates</header>
+  <nav>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="vote.html">Vote</a>
+    <a href="nomination.html">Nominate</a>
+    <a href="profile.html">Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+
+  <div class="container">
+    <h2>All Approved Contestants</h2>
+    <div id="candidatesList"></div>
+  </div>
+</body>
+</html>

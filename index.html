@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body onload="loadDynamicOptions()">
+  <header>Login - St. Joseph’s Voting</header>
+  <nav>
+    <a href="master.html">Home</a>
+    <a href="register.html">Register</a>
+    <a href="admin.html">Admin Panel</a>
+  </nav>
+
+  <div class="container">
+    <h2>Student Login</h2>
+    <input id="adm" placeholder="Admission Number">
+    <input id="name" placeholder="Full Name">
+    <select id="class"></select>
+    <select id="dorm"></select>
+    <button onclick="login()">Login</button>
+  </div>
+</body>
+</html>

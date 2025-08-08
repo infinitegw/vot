@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nominate</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadNominationOptions()">
+  <div class="container">
+    <h2>Nominate Yourself</h2>
+    <input id="name" placeholder="Your Full Name">
+    <select id="position"><option>Loading Posts...</option></select>
+    <select id="class"><option>Loading Classes...</option></select>
+    <select id="dorm"><option>Loading Dorms...</option></select>
+    <textarea id="manifesto" placeholder="Your Manifesto"></textarea>
+    <button onclick="nominate()">Submit Nomination</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
