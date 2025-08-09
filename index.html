@@ -1,79 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>St. Joseph's Boys High School Voting System</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #004080, #00aaff);
-      color: #fff;
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      text-align: center;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-    }
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 40px;
-      max-width: 500px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-    }
-    .btn-container {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    button {
-      background-color: #003366;
-      border: none;
-      padding: 15px 30px;
-      font-size: 1rem;
-      color: #fff;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #0055aa;
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>St. Joseph's Boys High - Voting</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header class="site-header">
+    <div class="brand">
+      <img src="logo.png" alt="SJHS Kitale" class="logo" onerror="this.style.display='none'">
+      <div>
+        <h1>St. Joseph's Boys High School — Kitale</h1>
+        <p class="subtitle">Official Student Elections Portal</p>
+      </div>
+    </div>
 
-  <h1>Welcome to St. Joseph's Boys High School Voting System</h1>
-  <p>Participate in our school elections by registering, logging in, and casting your vote securely.</p>
+    <nav class="top-nav">
+      <button onclick="location.href='index.html'">Home</button>
+      <button onclick="location.href='register.html'">Register</button>
+      <button onclick="location.href='login.html'">Login</button>
+      <button onclick="openAdminPanel()" id="adminPanelBtn">Admin Panel</button>
+    </nav>
+  </header>
 
-  <div class="btn-container">
-    <button onclick="window.location.href='register.html'">Register</button>
-    <button onclick="window.location.href='login.html'">Login</button>
-    <button id="adminBtn">Admin Panel</button>
-  </div>
+  <main class="container">
+    <section class="hero">
+      <h2>Make your voice heard</h2>
+      <p>Register, nominate and vote for your student leaders. Secure, simple and transparent.</p>
+      <div class="cta">
+        <button onclick="location.href='register.html'">Register</button>
+        <button onclick="location.href='login.html'">Login</button>
+      </div>
+    </section>
 
-  <script>
-    document.getElementById('adminBtn').addEventListener('click', () => {
-      const password = prompt('Enter admin password:');
-      const storedPass = localStorage.getItem('adminPassword') || 'admin123';
-      if (password === storedPass) {
-        localStorage.setItem('adminLoggedIn', 'true');
-        window.location.href = 'admin.html';
-      } else {
-        alert('Incorrect password');
-      }
-    });
-  </script>
+    <section class="info-cards">
+      <div class="card">
+        <h3>How it works</h3>
+        <ul>
+          <li>Register with your admission number</li>
+          <li>Nominate or vote</li>
+          <li>Admin approves nominations and publishes results</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Admin</h3>
+        <p>Admins can manage posts, classes, dorms and publish results.</p>
+      </div>
+    </section>
+  </main>
 
+  <footer class="site-footer">
+    <p>© 2025 St. Joseph's Boys High School — Kitale</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
