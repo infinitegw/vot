@@ -1,115 +1,48 @@
-/* General Styles */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f4f6f9;
-  color: #333;
+:root{
+  --brand:#004080;
+  --accent:#0077c8;
+  --soft:#f6f9fc;
+  --muted:#6b7280;
 }
-
-header {
-  background-color: #004d40;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
+*{box-sizing:border-box}
+body{
+  font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  margin:0;background:var(--soft);color:#111;
 }
-
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 10px;
+.site-header{
+  background:linear-gradient(90deg,var(--brand),var(--accent));
+  color:white;padding:18px 20px;display:flex;flex-direction:column;gap:10px;
 }
+.brand{display:flex;gap:12px;align-items:center}
+.logo{height:64px;width:64px;object-fit:contain;border-radius:8px;background:white;padding:6px}
+.site-header h1{margin:0;font-size:20px}
+.subtitle{margin:0;font-size:13px;opacity:.9}
+.top-nav{display:flex;gap:10px;align-items:center}
+.top-nav button{background:rgba(255,255,255,0.12);border:none;color:white;padding:10px 14px;border-radius:8px;cursor:pointer}
+.top-nav button:hover{background:rgba(255,255,255,0.18)}
+.container{max-width:1000px;margin:24px auto;padding:0 16px}
+.hero{background:white;padding:28px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.06);text-align:center}
+.hero h2{margin:0 0 8px}
+.hero p{color:var(--muted)}
+.cta{margin-top:18px;display:flex;gap:10px;justify-content:center}
+.cta button{background:var(--brand);color:white;border:none;padding:12px 20px;border-radius:8px;cursor:pointer}
+.info-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.card{background:white;padding:18px;border-radius:10px;box-shadow:0 4px 14px rgba(2,6,23,0.04)}
+.site-footer{text-align:center;padding:20px;color:var(--muted);margin-top:20px}
 
-nav a {
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px;
-  background: #00695c;
-  border-radius: 5px;
-  transition: background 0.3s ease;
+/* Forms & common */
+.container .form-card{background:white;padding:20px;border-radius:10px;box-shadow:0 6px 20px rgba(2,6,23,0.04)}
+label{display:block;margin:8px 0 4px;font-weight:600}
+input[type=text],input[type=password],select,input[type=datetime-local],textarea{
+  width:100%;padding:10px;border-radius:8px;border:1px solid #d6dbe2;font-size:14px;
 }
+button.primary{background:var(--brand);color:white;border:none;padding:10px 12px;border-radius:8px;cursor:pointer}
+.small{padding:6px 10px;font-size:13px;border-radius:6px}
+ul.simple{list-style:none;padding:0;margin:10px 0}
+ul.simple li{padding:8px;border-radius:8px;background:#f4f8ff;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
 
-nav a:hover {
-  background: #00796b;
-}
-
-.container {
-  max-width: 500px;
-  margin: 30px auto;
-  background: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-h2 {
-  text-align: center;
-  color: #004d40;
-}
-
-input[type="text"],
-input[type="password"],
-select {
-  width: 100%;
-  padding: 10px;
-  margin: 12px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #004d40;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button:hover {
-  background-color: #00695c;
-}
-
-.success {
-  color: green;
-  font-weight: bold;
-}
-
-.error {
-  color: red;
-  font-weight: bold;
-}
-
-.footer {
-  margin-top: 50px;
-  text-align: center;
-  font-size: 14px;
-  color: #888;
-}
-
-.countdown {
-  margin-top: 15px;
-  font-weight: bold;
-  color: #d32f2f;
-  text-align: center;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .container {
-    margin: 10px;
-    padding: 20px;
-  }
-
-  nav {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  nav a {
-    width: 80%;
-    text-align: center;
-  }
-}
+/* responsive */
+@media (max-width:760px){
+  .info-cards{grid-template-columns:1fr}
+  .brand{flex-direction:row}
+             }
