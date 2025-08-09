@@ -1,0 +1,65 @@
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
+const db = require('./db');
+require('dotenv').config();
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+
+// -------------------- ADMIN PASSWORD CHECK --------------------
+app.post('/admin/login', async (req, res) => {
+    const { password } = req.body;
+    const query = "SELECT password FROM admin WHERE id = 1";
+    db.get(query, [], async (err, row) => {
+        if (err) return res.status(500).json({ error: err.message });
+        if (!row) return res.status(404).json({ error: "Admin not found" });
+
+        const match = await bcrypt.compare(password, row.password);
+        if (match) {
+            res.json({ success: true });
+        } else {
+            res.json({ success: false });
+        }
+    });
+});
+
+// -------------------- CHANGE ADMIN PASSWORD --------------------
+app.post('/admin/change-password', async (req, res) => {
+    const { newPassword } = req.body;
+    const hashed = await bcrypt.hash(newPassword, 10);
+    const query = "UPDATE admin SET password = ? WHERE id = 1";
+    db.run(query, [hashed], (err) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ success: true });
+    });
+});
+
+// -------------------- REGISTER STUDENT --------------------
+app.post('/register', (req, res) => {
+    const { name, className, dorm } = req.body;
+    const query = "INSERT INTO students (name, class, dorm) VALUES (?, ?, ?)";
+    db.run(query, [name, className, dorm], function (err) {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ success: true, id: this.lastID });
+    });
+});
+
+// -------------------- LOGIN STUDENT --------------------
+app.post('/login', (req, res) => {
+    const { name } = req.body;
+    const query = "SELECT * FROM students WHERE name = ?";
+    db.get(query, [name], (err, row) => {
+        if (err) return res.status(500).json({ error: err.message });
+        if (!row) return res.status(404).json({ error: "Student not found" });
+        res.json({ success: true, student: row });
+    });
+});
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
