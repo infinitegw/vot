@@ -1,162 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin Panel - St. Joseph's Voting System</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - St. Joseph's Voting</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // quick guard: if not logged in (flag set by script.js), redirect immediately
+    if (localStorage.getItem('adminLoggedIn') !== 'true') {
+      alert('Access denied. Please sign in as admin.');
+      window.location.href = 'index.html';
+    }
+  </script>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f5f7fa;
-      margin: 0;
-      padding: 0 20px 40px;
-      color: #222;
-    }
-    header {
-      background-color: #004080;
-      color: white;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-    }
-    header button {
-      background-color: #e63946;
-      border: none;
-      color: white;
-      padding: 10px 18px;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    header button:hover {
-      background-color: #c62828;
-    }
-    main {
-      max-width: 900px;
-      margin: 30px auto 0;
-      background: white;
-      padding: 30px 40px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-    main h2 {
-      margin-top: 0;
-      color: #004080;
-      border-bottom: 2px solid #004080;
-      padding-bottom: 10px;
-    }
-    section {
-      margin-bottom: 35px;
-    }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #333;
-    }
-    input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 10px 12px;
-      margin-bottom: 12px;
-      border: 1.8px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
-      transition: border-color 0.3s ease;
-    }
-    input[type="text"]:focus, input[type="password"]:focus {
-      border-color: #004080;
-      outline: none;
-    }
-    button.action-btn {
-      background-color: #004080;
-      border: none;
-      color: white;
-      padding: 12px 25px;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-top: 5px;
-    }
-    button.action-btn:hover {
-      background-color: #002b5c;
-    }
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-      margin-top: 10px;
-    }
-    ul li {
-      padding: 8px 12px;
-      background: #f0f4ff;
-      border-radius: 5px;
-      margin-bottom: 7px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 500;
-    }
-    ul li button {
-      background-color: #2a9d8f;
-      padding: 6px 12px;
-      border: none;
-      color: white;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: background-color 0.3s ease;
-    }
-    ul li button:hover {
-      background-color: #21867a;
-    }
+    /* small admin-only overrides; keeps file self-contained if needed */
+    body{font-family:Segoe UI,Arial;background:#f5f7fa;margin:0}
+    header{background:#004080;color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center}
+    header h1{margin:0;font-size:1.2rem}
+    .wrap{max-width:980px;margin:22px auto;padding:20px;background:#fff;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
+    section{margin-bottom:22px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    input[type=text], input[type=password], input[type=datetime-local] {width:100%;padding:10px;border:1px solid #d0d7df;border-radius:6px}
+    button {background:#004080;color:#fff;border:none;padding:10px 12px;border-radius:6px;cursor:pointer}
+    ul{list-style:none;padding:0;margin:8px 0}
+    li{background:#f1f8ff;padding:8px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .danger{background:#ffdddd;color:#900;padding:6px 10px;border-radius:6px;border:none}
+    .small{font-size:0.9rem;padding:6px 10px}
+    @media (max-width:720px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
-<body onload="checkAdminSession()">
+<body>
+  <header>
+    <h1>Admin Dashboard — St. Joseph's Boys HS, Kitale</h1>
+    <div>
+      <button onclick="changeAdminPassword()" class="small">Change Password</button>
+      <button onclick="adminLogout()" class="small danger">Logout</button>
+    </div>
+  </header>
 
-<header>
-  <h1>Admin Dashboard</h1>
-  <button onclick="logoutAdmin()">Logout</button>
-</header>
+  <div class="wrap">
+    <section>
+      <h2>Voting Controls</h2>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div style="flex:1">
+          <label>Set Voting Deadline</label>
+          <input id="deadlineInput" type="datetime-local">
+          <div style="margin-top:8px">
+            <button onclick="setVotingDeadline()">Set Deadline</button>
+            <button onclick="clearVotingDeadline()" style="margin-left:8px;background:#888">Clear</button>
+          </div>
+        </div>
+        <div style="flex:1">
+          <label>Publish Results</label>
+          <div style="margin-top:8px">
+            <button onclick="publishResults()">Publish Results</button>
+            <button onclick="unpublishResults()" style="margin-left:8px;background:#888">Unpublish</button>
+          </div>
+          <p id="publishStatus" style="margin-top:10px;font-weight:600"></p>
+        </div>
+      </div>
+    </section>
 
-<main>
-  <section>
-    <h2>Change Admin Password</h2>
-    <input type="password" id="newAdminPassword" placeholder="Enter new password" />
-    <button class="action-btn" onclick="changeAdminPassword()">Update Password</button>
-  </section>
+    <section class="grid">
+      <div>
+        <h3>Manage Posts</h3>
+        <input id="newPost" type="text" placeholder="Add post (e.g. Head Boy)">
+        <div style="margin-top:8px">
+          <button onclick="addPost()">Add Post</button>
+        </div>
+        <ul id="postList" style="margin-top:12px"></ul>
+      </div>
 
-  <section>
-    <h2>Manage Classes</h2>
-    <input type="text" id="newClass" placeholder="Add new class" />
-    <button class="action-btn" onclick="addClass()">Add Class</button>
-    <ul id="classList"></ul>
-  </section>
+      <div>
+        <h3>Manage Classes</h3>
+        <input id="newClass" type="text" placeholder="Add class (e.g. Form Three)">
+        <div style="margin-top:8px">
+          <button onclick="addClass()">Add Class</button>
+        </div>
+        <ul id="classList" style="margin-top:12px"></ul>
+      </div>
 
-  <section>
-    <h2>Manage Dorms</h2>
-    <input type="text" id="newDorm" placeholder="Add new dorm" />
-    <button class="action-btn" onclick="addDorm()">Add Dorm</button>
-    <ul id="dormList"></ul>
-  </section>
+      <div>
+        <h3>Manage Dorms</h3>
+        <input id="newDorm" type="text" placeholder="Add dorm (e.g. St. Peter)">
+        <div style="margin-top:8px">
+          <button onclick="addDorm()">Add Dorm</button>
+        </div>
+        <ul id="dormList" style="margin-top:12px"></ul>
+      </div>
 
-  <section>
-    <h2>Approve Nominations</h2>
-    <ul id="nominationList"></ul>
-  </section>
+      <div>
+        <h3>Pending Nominations</h3>
+        <div id="pendingNoms" style="max-height:220px;overflow:auto"></div>
+      </div>
+    </section>
 
-  <section>
-    <h2>Publish Results</h2>
-    <button class="action-btn" onclick="publishResults()">Publish Now</button>
-  </section>
-</main>
+    <section>
+      <h3>Activity (Recent)</h3>
+      <div id="activityLog" style="max-height:180px;overflow:auto;background:#fafafa;padding:10px;border-radius:6px"></div>
+    </section>
+  </div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
