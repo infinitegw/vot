@@ -1,105 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Admin - St. Joseph's Voting</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
   <link rel="stylesheet" href="style.css">
-  <script>
-    // quick guard: if not logged in (flag set by script.js), redirect immediately
-    if (localStorage.getItem('adminLoggedIn') !== 'true') {
-      alert('Access denied. Please sign in as admin.');
-      window.location.href = 'index.html';
-    }
-  </script>
-  <style>
-    /* small admin-only overrides; keeps file self-contained if needed */
-    body{font-family:Segoe UI,Arial;background:#f5f7fa;margin:0}
-    header{background:#004080;color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center}
-    header h1{margin:0;font-size:1.2rem}
-    .wrap{max-width:980px;margin:22px auto;padding:20px;background:#fff;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
-    section{margin-bottom:22px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    input[type=text], input[type=password], input[type=datetime-local] {width:100%;padding:10px;border:1px solid #d0d7df;border-radius:6px}
-    button {background:#004080;color:#fff;border:none;padding:10px 12px;border-radius:6px;cursor:pointer}
-    ul{list-style:none;padding:0;margin:8px 0}
-    li{background:#f1f8ff;padding:8px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-    .danger{background:#ffdddd;color:#900;padding:6px 10px;border-radius:6px;border:none}
-    .small{font-size:0.9rem;padding:6px 10px}
-    @media (max-width:720px){.grid{grid-template-columns:1fr}}
-  </style>
 </head>
 <body>
   <header>
-    <h1>Admin Dashboard — St. Joseph's Boys HS, Kitale</h1>
-    <div>
-      <button onclick="changeAdminPassword()" class="small">Change Password</button>
-      <button onclick="adminLogout()" class="small danger">Logout</button>
-    </div>
+    <h1>Admin Panel</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html" onclick="logout()">Logout</a>
+    </nav>
   </header>
 
-  <div class="wrap">
+  <main>
     <section>
-      <h2>Voting Controls</h2>
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <div style="flex:1">
-          <label>Set Voting Deadline</label>
-          <input id="deadlineInput" type="datetime-local">
-          <div style="margin-top:8px">
-            <button onclick="setVotingDeadline()">Set Deadline</button>
-            <button onclick="clearVotingDeadline()" style="margin-left:8px;background:#888">Clear</button>
-          </div>
-        </div>
-        <div style="flex:1">
-          <label>Publish Results</label>
-          <div style="margin-top:8px">
-            <button onclick="publishResults()">Publish Results</button>
-            <button onclick="unpublishResults()" style="margin-left:8px;background:#888">Unpublish</button>
-          </div>
-          <p id="publishStatus" style="margin-top:10px;font-weight:600"></p>
-        </div>
-      </div>
+      <h2>Login as Admin</h2>
+      <form id="adminLoginForm">
+        <label>Password</label>
+        <input type="password" id="adminPass" required>
+        <button type="submit">Login</button>
+      </form>
     </section>
 
-    <section class="grid">
-      <div>
-        <h3>Manage Posts</h3>
-        <input id="newPost" type="text" placeholder="Add post (e.g. Head Boy)">
-        <div style="margin-top:8px">
-          <button onclick="addPost()">Add Post</button>
-        </div>
-        <ul id="postList" style="margin-top:12px"></ul>
-      </div>
+    <section id="adminControls" style="display:none;">
+      <h2>Manage System</h2>
 
-      <div>
-        <h3>Manage Classes</h3>
-        <input id="newClass" type="text" placeholder="Add class (e.g. Form Three)">
-        <div style="margin-top:8px">
-          <button onclick="addClass()">Add Class</button>
-        </div>
-        <ul id="classList" style="margin-top:12px"></ul>
-      </div>
+      <h3>Posts</h3>
+      <input type="text" id="newPost" placeholder="New Post">
+      <button onclick="addPost()">Add</button>
+      <ul id="postList"></ul>
 
-      <div>
-        <h3>Manage Dorms</h3>
-        <input id="newDorm" type="text" placeholder="Add dorm (e.g. St. Peter)">
-        <div style="margin-top:8px">
-          <button onclick="addDorm()">Add Dorm</button>
-        </div>
-        <ul id="dormList" style="margin-top:12px"></ul>
-      </div>
+      <h3>Classes</h3>
+      <input type="text" id="newClass" placeholder="New Class">
+      <button onclick="addClass()">Add</button>
+      <ul id="classList"></ul>
 
-      <div>
-        <h3>Pending Nominations</h3>
-        <div id="pendingNoms" style="max-height:220px;overflow:auto"></div>
-      </div>
+      <h3>Dorms</h3>
+      <input type="text" id="newDorm" placeholder="New Dorm">
+      <button onclick="addDorm()">Add</button>
+      <ul id="dormList"></ul>
+
+      <h3>Pending Nominations</h3>
+      <ul id="nominationList"></ul>
     </section>
-
-    <section>
-      <h3>Activity (Recent)</h3>
-      <div id="activityLog" style="max-height:180px;overflow:auto;background:#fafafa;padding:10px;border-radius:6px"></div>
-    </section>
-  </div>
+  </main>
 
   <script src="script.js"></script>
 </body>
