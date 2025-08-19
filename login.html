@@ -2,61 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - School Voting System</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>St. Joseph’s Boys High School Kitale</h1>
-    <h2>Student Login</h2>
+    <h1>School Voting System</h1>
+    <nav>
+      <a href="register.html">Register</a>
+    </nav>
   </header>
 
-  <div class="container">
+  <main>
+    <h2>Student Login</h2>
     <form id="loginForm">
-      <label for="adm">Admission Number</label>
-      <input type="text" id="adm" required>
+      <label>Admission Number</label>
+      <input type="text" id="loginAdm" required>
 
-      <label for="class">Class</label>
-      <select id="class" required></select>
-
-      <label for="dorm">Dorm</label>
-      <select id="dorm" required></select>
+      <label>Password</label>
+      <input type="password" id="loginPass" required>
 
       <button type="submit">Login</button>
     </form>
-    <p style="text-align:center; margin-top: 20px;">
-      Not registered? <a href="register.html">Register Here</a>
-    </p>
-  </div>
 
-  <script>
-    // Load classes and dorms from localStorage
-    function populateDropdown(id, listName) {
-      const list = JSON.parse(localStorage.getItem(listName)) || [];
-      const select = document.getElementById(id);
-      select.innerHTML = list.length ? list.map(item => `<option>${item}</option>`).join('') : '<option disabled selected>No options available</option>';
-    }
+    <div>
+      <p>Admin? <a href="admin.html">Go to Admin Panel</a></p>
+    </div>
+  </main>
 
-    populateDropdown('class', 'classes');
-    populateDropdown('dorm', 'dorms');
-
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const adm = document.getElementById('adm').value.trim();
-      const studentClass = document.getElementById('class').value;
-      const dorm = document.getElementById('dorm').value;
-
-      const students = JSON.parse(localStorage.getItem('students')) || [];
-      const user = students.find(s => s.adm === adm && s.class === studentClass && s.dorm === dorm);
-
-      if (user) {
-        localStorage.setItem('loggedInUser', JSON.stringify(user));
-        alert('Login successful');
-        window.location.href = 'dashboard.html';
-      } else {
-        alert('Invalid login. Please check your details.');
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
