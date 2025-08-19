@@ -2,66 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register - School Voting System</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>St. Joseph’s Boys High School Kitale</h1>
-    <h2>Student Registration</h2>
+    <h1>School Voting System</h1>
+    <nav>
+      <a href="login.html">Login</a>
+    </nav>
   </header>
 
-  <div class="container">
+  <main>
+    <h2>Create Student Account</h2>
     <form id="registerForm">
-      <label for="adm">Admission Number</label>
-      <input type="text" id="adm" required>
+      <label>Full Name</label>
+      <input type="text" id="regName" required>
 
-      <label for="name">Full Name</label>
-      <input type="text" id="name" required>
+      <label>Admission Number</label>
+      <input type="text" id="regAdm" required>
 
-      <label for="class">Class</label>
-      <select id="class" required></select>
+      <label>Password</label>
+      <input type="password" id="regPass" required>
 
-      <label for="dorm">Dorm</label>
-      <select id="dorm" required></select>
+      <label>Class</label>
+      <select id="regClass" required></select>
+
+      <label>Dorm</label>
+      <select id="regDorm" required></select>
 
       <button type="submit">Register</button>
     </form>
-    <p style="text-align:center; margin-top: 20px;">
-      Already registered? <a href="login.html">Login Here</a>
-    </p>
-  </div>
+  </main>
 
-  <script>
-    // Load classes and dorms from localStorage
-    function populateDropdown(id, listName) {
-      const list = JSON.parse(localStorage.getItem(listName)) || [];
-      const select = document.getElementById(id);
-      select.innerHTML = list.length ? list.map(item => `<option>${item}</option>`).join('') : '<option disabled selected>No options available</option>';
-    }
-
-    populateDropdown('class', 'classes');
-    populateDropdown('dorm', 'dorms');
-
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const adm = document.getElementById('adm').value.trim();
-      const name = document.getElementById('name').value.trim();
-      const studentClass = document.getElementById('class').value;
-      const dorm = document.getElementById('dorm').value;
-
-      const students = JSON.parse(localStorage.getItem('students')) || [];
-
-      if (students.some(s => s.adm === adm)) {
-        alert('Admission number already registered.');
-        return;
-      }
-
-      students.push({ adm, name, class: studentClass, dorm });
-      localStorage.setItem('students', JSON.stringify(students));
-      alert('Registration successful. You can now log in.');
-      window.location.href = 'login.html';
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
