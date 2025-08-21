@@ -1,41 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register - School Voting System</title>
+  <title>Register</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header>
-    <h1>School Voting System</h1>
-    <nav>
-      <a href="login.html">Login</a>
-    </nav>
-  </header>
-
-  <main>
-    <h2>Create Student Account</h2>
-    <form id="registerForm">
-      <label>Full Name</label>
-      <input type="text" id="regName" required>
-
-      <label>Admission Number</label>
-      <input type="text" id="regAdm" required>
-
-      <label>Password</label>
-      <input type="password" id="regPass" required>
-
-      <label>Class</label>
-      <select id="regClass" required></select>
-
-      <label>Dorm</label>
-      <select id="regDorm" required></select>
-
-      <button type="submit">Register</button>
-    </form>
-  </main>
+<body onload="loadRegistrationOptions()">
+  <div class="container">
+    <h2>📝 Student Registration</h2>
+    <input type="text" id="adm" placeholder="Admission Number">
+    <input type="text" id="name" placeholder="Full Name">
+    <select id="class"><option disabled selected>Loading Classes...</option></select>
+    <select id="dorm"><option disabled selected>Loading Dorms...</option></select>
+    <button onclick="register()">Register</button>
+    <p>Already registered? <a href="index.html">Login here</a></p>
+  </div>
 
   <script src="script.js"></script>
+  <script>
+    function loadRegistrationOptions() {
+      const classes = JSON.parse(localStorage.getItem("classes")) || [];
+      const dorms = JSON.parse(localStorage.getItem("dorms")) || [];
+
+      document.getElementById("class").innerHTML =
+        `<option disabled selected>Select Class</option>` +
+        classes.map(c => `<option>${c}</option>`).join("");
+
+      document.getElementById("dorm").innerHTML =
+        `<option disabled selected>Select Dorm</option>` +
+        dorms.map(d => `<option>${d}</option>`).join("");
+    }
+  </script>
 </body>
 </html>
