@@ -1,59 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>St. Joseph's Boys High - Voting</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Student Login</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="brand">
-      <img src="logo.png" alt="SJHS Kitale" class="logo" onerror="this.style.display='none'">
-      <div>
-        <h1>St. Joseph's Boys High School — Kitale</h1>
-        <p class="subtitle">Official Student Elections Portal</p>
-      </div>
-    </div>
-
-    <nav class="top-nav">
-      <button onclick="location.href='index.html'">Home</button>
-      <button onclick="location.href='register.html'">Register</button>
-      <button onclick="location.href='login.html'">Login</button>
-      <button onclick="openAdminPanel()" id="adminPanelBtn">Admin Panel</button>
-    </nav>
-  </header>
-
-  <main class="container">
-    <section class="hero">
-      <h2>Make your voice heard</h2>
-      <p>Register, nominate and vote for your student leaders. Secure, simple and transparent.</p>
-      <div class="cta">
-        <button onclick="location.href='register.html'">Register</button>
-        <button onclick="location.href='login.html'">Login</button>
-      </div>
-    </section>
-
-    <section class="info-cards">
-      <div class="card">
-        <h3>How it works</h3>
-        <ul>
-          <li>Register with your admission number</li>
-          <li>Nominate or vote</li>
-          <li>Admin approves nominations and publishes results</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Admin</h3>
-        <p>Admins can manage posts, classes, dorms and publish results.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <p>© 2025 St. Joseph's Boys High School — Kitale</p>
-  </footer>
-
+  <div class="container">
+    <h2>👨‍🎓 Student Login</h2>
+    <input type="text" id="adm" placeholder="Admission Number">
+    <input type="text" id="name" placeholder="Full Name">
+    <select id="class">
+      <option disabled selected>Select Class</option>
+      <!-- same class options -->
+    </select>
+    <select id="dorm">
+      <option disabled selected>Select Dorm</option>
+      <!-- same dorm options -->
+    </select>
+    <button onclick="login()">Login</button>
+    <p>No account? <a href="register.html">Register here</a></p>
+  </div>
   <script src="script.js"></script>
 </body>
-    </html>
+</html>
