@@ -1,47 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard – St. Joseph's Voting</title>
+  <title>Student Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
-<body>
-  <header>
-    <h1>🎓 Student Dashboard</h1>
-    <nav>
-      <a href="voting.html">Vote</a>
-      <a href="profile.html">Profile</a>
-      <a href="nominate.html">Nominate</a>
-      <a href="results.html">Results</a>
-      <a href="#" onclick="logout()">Logout</a>
-    </nav>
-  </header>
+<body onload="renderProfile(); showStudentResults();">
+  <header>Student Dashboard</header>
+  <nav>
+    <a href="voting.html">Vote</a>
+    <a href="nominate.html">Nominate</a>
+    <a href="contestants.html">View Contestants</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
 
-  <main>
-    <h2>Welcome, <span id="studentName"></span> 👋</h2>
-    <p>You are logged in as <strong><span id="studentClass"></span></strong> from <strong><span id="studentDorm"></span></strong> dorm.</p>
+  <div class="container">
+    <section>
+      <h2>👤 Profile</h2>
+      <div id="profileDetails"></div>
+    </section>
 
-    <div id="notices">
-      <p><strong>Note:</strong> You can only vote once per position. Make your vote count!</p>
-    </div>
-  </main>
-
-  <footer>
-    <p>© 2025 St. Joseph's Boys High School – Kitale</p>
-  </footer>
-
-  <script src="script.js"></script>
-  <script>
-    // Load student info from localStorage
-    const currentStudent = JSON.parse(localStorage.getItem("currentStudent"));
-    if (!currentStudent) {
-      alert("Please log in first.");
-      window.location.href = "login.html";
-    } else {
-      document.getElementById("studentName").textContent = currentStudent.name;
-      document.getElementById("studentClass").textContent = currentStudent.class;
-      document.getElementById("studentDorm").textContent = currentStudent.dorm;
-    }
-  </script>
+    <section>
+      <h2>🏆 Published Results</h2>
+      <div id="winnersDisplay"></div>
+    </section>
+  </div>
 </body>
 </html>
