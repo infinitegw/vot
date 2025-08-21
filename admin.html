@@ -1,53 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header>
-    <h1>Admin Panel</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="login.html" onclick="logout()">Logout</a>
-    </nav>
-  </header>
+<body onload="renderAdminData()">
+  <div class="container">
+    <h2>Admin Panel</h2>
+    <div id="adminLogin">
+      <input type="password" id="adminPass" placeholder="Enter Admin Password">
+      <button onclick="checkAdmin()">Login</button>
+    </div>
 
-  <main>
-    <section>
-      <h2>Login as Admin</h2>
-      <form id="adminLoginForm">
-        <label>Password</label>
-        <input type="password" id="adminPass" required>
-        <button type="submit">Login</button>
-      </form>
-    </section>
+    <div id="adminPanel" style="display: none;">
+      <p><strong>Academic Year:</strong> <span id="yearDisplay">Not Set</span></p>
+      <input id="academicYear" placeholder="Set Year (e.g. 2024/2025)">
+      <button onclick="setAcademicYear()">Update Year</button>
 
-    <section id="adminControls" style="display:none;">
-      <h2>Manage System</h2>
+      <h3>Set Voting Deadline</h3>
+      <input type="datetime-local" id="deadlineInput">
+      <button onclick="setVotingDeadline()">Set Deadline</button>
 
-      <h3>Posts</h3>
-      <input type="text" id="newPost" placeholder="New Post">
-      <button onclick="addPost()">Add</button>
-      <ul id="postList"></ul>
-
-      <h3>Classes</h3>
-      <input type="text" id="newClass" placeholder="New Class">
-      <button onclick="addClass()">Add</button>
+      <h3>Manage Classes</h3>
+      <input id="newClass" placeholder="Add New Class">
+      <button onclick="addClass()">Add Class</button>
       <ul id="classList"></ul>
 
-      <h3>Dorms</h3>
-      <input type="text" id="newDorm" placeholder="New Dorm">
-      <button onclick="addDorm()">Add</button>
+      <h3>Manage Dorms</h3>
+      <input id="newDorm" placeholder="Add New Dorm">
+      <button onclick="addDorm()">Add Dorm</button>
       <ul id="dormList"></ul>
 
-      <h3>Pending Nominations</h3>
-      <ul id="nominationList"></ul>
-    </section>
-  </main>
+      <h3>Manage Posts</h3>
+      <input id="newPost" placeholder="Add New Post">
+      <button onclick="addPost()">Add Post</button>
+      <ul id="postList"></ul>
 
+      <h3>Add Candidate</h3>
+      <input id="newCandName" placeholder="Full Name">
+      <select id="newCandPosition"></select>
+      <select id="newCandClass"></select>
+      <select id="newCandDorm"></select>
+      <button onclick="addCandidate()">Add</button>
+      <ul id="candidatesList"></ul>
+
+      <h3>Pending Nominations</h3>
+      <div id="pendingNominations"></div>
+
+      <h3>Vote Export</h3>
+      <select id="exportFilterType">
+        <option value="class">By Class</option>
+        <option value="dorm">By Dorm</option>
+        <option value="post">By Post</option>
+      </select>
+      <input id="exportFilterValue" placeholder="Enter Value">
+      <button onclick="exportFilteredCSV()">Export CSV</button>
+      <button onclick="exportFilteredPDF()">Export PDF</button>
+
+      <h3>Live Results</h3>
+      <canvas id="adminChart" height="100"></canvas>
+
+      <h3>Logs</h3>
+      <ul id="logsList"></ul>
+
+      <br><button onclick="logoutAdmin()">Logout Admin</button>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
