@@ -1,30 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Student Dashboard</title>
+  <title>Dashboard</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
 </head>
-<body onload="renderProfile(); showStudentResults();">
-  <header>Student Dashboard</header>
-  <nav>
-    <a href="voting.html">Vote</a>
-    <a href="nominate.html">Nominate</a>
-    <a href="contestants.html">View Contestants</a>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="#" onclick="logout()">Logout</a>
-  </nav>
-
+<body onload="renderLiveChart();startStudentEmbedChart()">
   <div class="container">
-    <section>
-      <h2>👤 Profile</h2>
-      <div id="profileDetails"></div>
-    </section>
+    <h2>Student Dashboard</h2>
+    <button onclick="location.href='vote.html'">🗳️ Vote</button>
+    <button onclick="location.href='nominate.html'">🏅 Nominate</button>
+    <button onclick="location.href='contestants.html'">👁️ View Contestants</button>
+    <button onclick="location.href='profile.html'">👤 My Profile</button>
+    <button onclick="logout()">🚪 Logout</button>
 
-    <section>
-      <h2>🏆 Published Results</h2>
-      <div id="winnersDisplay"></div>
-    </section>
+    <h3>Live Voting Stats</h3>
+    <canvas id="voteChart" height="100"></canvas>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
