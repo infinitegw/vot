@@ -1,36 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - School Voting System</title>
+  <title>Login</title>
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
-<body>
-  <header>
-    <h1>School Voting System</h1>
-    <nav>
-      <a href="register.html">Register</a>
-    </nav>
-  </header>
+<body onload="loadDynamicOptions()">
+  <header>Login - St. Joseph’s Voting</header>
+  <nav>
+    <a href="master.html">Home</a>
+    <a href="register.html">Register</a>
+    <a href="admin.html">Admin Panel</a>
+  </nav>
 
-  <main>
+  <div class="container">
     <h2>Student Login</h2>
-    <form id="loginForm">
-      <label>Admission Number</label>
-      <input type="text" id="loginAdm" required>
+    <input id="adm" placeholder="Admission Number">
+    <input id="name" placeholder="Full Name">
+    <select id="class"></select>
+    <select id="dorm"></select>
+    <button onclick="login()">Login</button>
 
-      <label>Password</label>
-      <input type="password" id="loginPass" required>
-
-      <button type="submit">Login</button>
-    </form>
-
-    <div>
-      <p>Admin? <a href="admin.html">Go to Admin Panel</a></p>
-    </div>
-  </main>
-
-  <script src="script.js"></script>
+    <p style="margin-top: 15px;">
+      Don’t have an account? <a href="register.html">Register here</a>.
+    </p>
+  </div>
 </body>
 </html>
