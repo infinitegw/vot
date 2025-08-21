@@ -1,42 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nominate Candidate</title>
+  <title>Nominate</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header>
-    <h1>Nominate Candidate</h1>
-    <nav>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="login.html" onclick="logout()">Logout</a>
-    </nav>
-  </header>
-
-  <main>
-    <h2>Nomination Form</h2>
-    <form id="nominateForm">
-      <label>Candidate Name</label>
-      <input type="text" id="nomName" required>
-
-      <label>Position</label>
-      <select id="nomPost" required></select>
-
-      <label>Class</label>
-      <select id="nomClass" required></select>
-
-      <label>Dorm</label>
-      <select id="nomDorm" required></select>
-
-      <label>Manifesto</label>
-      <textarea id="nomManifesto" rows="4" required></textarea>
-
-      <button type="submit">Submit Nomination</button>
-    </form>
-  </main>
-
+<body onload="loadNominationOptions()">
+  <div class="container">
+    <h2>Nominate Yourself</h2>
+    <input id="name" placeholder="Your Full Name">
+    <select id="position"><option>Loading Posts...</option></select>
+    <select id="class"><option>Loading Classes...</option></select>
+    <select id="dorm"><option>Loading Dorms...</option></select>
+    <textarea id="manifesto" placeholder="Your Manifesto"></textarea>
+    <button onclick="nominate()">Submit Nomination</button>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
